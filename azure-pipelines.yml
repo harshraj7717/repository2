@@ -5,11 +5,12 @@
 
 trigger:
 - master
-
+ 
 pool:
-  vmImage: windows-latest
-
+  vmImage: 'windows-latest'
+ 
 steps:
+# Build and package Java application
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -20,7 +21,16 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+ 
+# Copy WAR files to the artifact staging directory
 - task: CopyFiles@2
   inputs:
     Contents: '**/*.war'
-    TargetFolder: '''$(build.artifactstagingdirectory)'''
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+ 
+# Publish the build artifacts
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'warfile'
+    publishLocation: 'Container'
