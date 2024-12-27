@@ -22,6 +22,6 @@ steps:
     goals: 'package'
 - task: CopyFilesOverSSH@0
   inputs:
-    contents: '''**/*.war'''
+    contents: '**/*.war'
     targetFolder: '''$(build.artifactstagingdirectory)'''
     readyTimeout: '20000'
