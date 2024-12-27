@@ -20,8 +20,3 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-- task: CopyFilesOverSSH@0
-  inputs:
-    contents: '**/*.war'
-    targetFolder: '''$(build.artifactstagingdirectory)'''
-    readyTimeout: '20000'
